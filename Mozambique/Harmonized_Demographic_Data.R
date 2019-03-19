@@ -3,6 +3,7 @@ library(dplyr)
 library(tibble)
 library(ggplot2)
 library(readr)
+library(splitstackshape)
 dat2008 <- read_sav("~/CARE-WWF/Data/CARE.Basic.Data.Set.Clean (1).sav")
 colnames(dat2008)<-gsub("@","Q",colnames(dat2008))
 nd2008 <- read_sav("~/CARE-WWF/Data/CARE.Final.Data.Set.2008.sav")
@@ -14,8 +15,8 @@ dat2014_agri <-dat2014_agri[-292,]
 dat2014_dem <- read_csv("~/CARE-WWF/Data/2014Demographic_Data.csv")
 dat2014_liveli <- read_csv("~/CARE-WWF/Data/2014Livelihood_Data.csv")
 dat2018 <- read_csv("~/CARE-WWF/Data/2018Data.csv")
-
-
+colnames(dat2018)<-paste("Q", colnames(dat2018))
+colnames(dat2018)<-gsub(" ","_",colnames(dat2018))
 #harmonize community & district data
 names(dat2008)[14]="Community_code"
 Community2008 <- ifelse(dat2008$Community_code == 241601, "Fuzi", 
@@ -329,6 +330,43 @@ harmdem$VSLA<-ifelse(harmdem$Community == "Nauluco" ,0,
                               ifelse(harmdem$Community == "Manene",0,
                               ifelse(harmdem$Community == "Corane",0,
                               ifelse(harmdem$Community == "Mingolene",0,NA))))))))
+
+#community associations that are indicative of CARE-WWF alliance
+Association_Alliance_2008<-ifelse((is.na(dat2008$Q6_2A) == TRUE) &
+                                (is.na(dat2008$Q6_2B) == TRUE) & 
+                                (is.na(dat2008$Q6_2C) == TRUE), NA,
+                                    ifelse(dat2008$Q6_2A  %in% c(1,5,6,7,11,16)|
+                                dat2008$Q6_2B  %in% c(1,5,6,7,11,16)|
+                                dat2008$Q6_2C  %in% c(1,5,6,7,11,16),1,0))
+
+#2014 and 2018 have '17' which was not present in 2008 survey
+
+Association_Alliance_2014<-gsub("[^0-9.,]","", dat2014_agri$`4.23`)
+Association_Alliance_2014<-gsub("[.]",",", Association_Alliance_2014)
+Association_Alliance_2014<-as.data.frame(Association_Alliance_2014)
+x<-cSplit(Association_Alliance_2014, "Association_Alliance_2014", sep=",")
+Association_Alliance_2014<-ifelse((is.na(x$Association_Alliance_2014_1) == TRUE) &
+                                    (is.na(x$Association_Alliance_2014_2) == TRUE) & 
+                                    (is.na(x$Association_Alliance_2014_3) == TRUE), NA,
+                                  ifelse(x$Association_Alliance_2014_1  %in% c(1,5,6,7,11,16,17)|
+                                           x$Association_Alliance_2014_2  %in% c(1,5,6,7,11,16,17)|
+                                           x$Association_Alliance_2014_3  %in% c(1,5,6,7,11,16,17),1,0))
+
+                               
+
+
+Association_Alliance_2018<-ifelse((is.na(dat2018$Q_10_2_A ) == TRUE) &
+                                (is.na(dat2018$Q_10_2_B ) == TRUE) & 
+                                (is.na(dat2018$Q_10_2_C ) == TRUE) & 
+                                (is.na(dat2018$Q_10_2_D ) == TRUE), NA,
+                              ifelse(dat2018$Q_10_2_A   %in% c(1,5,6,7,11,16,17)|
+                                       dat2018$Q_10_2_B   %in% c(1,5,6,7,11,16,17)|
+                                       dat2018$Q_10_2_C  %in% c(1,5,6,7,11,16,17)|
+                                       dat2018$Q_10_2_D   %in% c(1,5,6,7,11,16,17),1,0))
+
+
+harmdem$Association_Alliance<-c(Association_Alliance_2008,Association_Alliance_2014,Association_Alliance_2018)
+
                                                               
 write.csv(harmdem, file="Harmonized_Demographic_Data.csv")
 
