@@ -23,6 +23,21 @@ Only2018$Food_prov<-fp2018[[1]]
 Only2018$Food_prov<-ifelse(Only2018$Food_prov=="2",0,1)
 Only2018$Food_prov_change<-fp2018[[3]]
 
+#add gender
+Only2018$Gender <- as.character(ifelse(dat2018[13] == 1, "Male", 
+                            ifelse(dat2018[13] == 2, "Female",NA)))
+
+#add literacy
+Only2018$Literacy <- as.logical(ifelse(dat2018[17] == 2, 0, 
+                              ifelse(dat2018[17] == 1, 1,NA)))
+
+#add community group membership Y/N
+Only2018$Community_Group <- as.logical(ifelse(dat2018[279] == 2, 0, 
+                                     ifelse(dat2018[279] == 1, 1,NA)))
+
+
+
+
 #subset to just the monthly provisioning data we want
 mpdat<-dat2018[ , grepl( "7_6" , names( dat2018 ) ) ]
 #Make all 0's (meaning they had adequade food provisioning for all months) 2's to indicate they had adequate food for that month
@@ -170,7 +185,6 @@ Only2018$Mang_select_extr<-ifelse(dat2018[[298]]==1,"I_practice",
 
 
 write.csv(Only2018, file="Cleaned_2018_only_data.csv")
-
 
 
 

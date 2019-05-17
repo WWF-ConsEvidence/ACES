@@ -167,5 +167,28 @@ assets2014<-cbind(sums2014,ad2014)
 assets2018<-cbind(sums2018,ad2018)
 
 harmAssets<-rbind(assets2008,assets2014,assets2018)
+
+harmAssets$Asset_weight_sum<-(harmAssets$Chair *0.05)+(harmAssets$Radio*0.1)+(harmAssets$Table*0.15)+(harmAssets$Bed*0.15)+
+  (harmAssets$`Cups & plates`*0.25)+ (harmAssets$Watch*0.3)+ (harmAssets$Gas*0.3)+ (harmAssets$Mattress*0.4)+ (harmAssets$Cellphone*0.5)+
+  (harmAssets$Stove*0.75)+ (harmAssets$Television*1.0)+ (harmAssets$Machete*0.05)+ (harmAssets$Axe*0.05)+ (harmAssets$`Mortar & pestle`*0.1)+
+  (harmAssets$Harpoon*0.3)+ (harmAssets$`Fishing net`*0.4)+ (harmAssets$`Fishing rod`*0.3)+ (harmAssets$Bicycle*0.4)+ (harmAssets$Wagon*0.65)+
+  (harmAssets$`Sewing Machine`*0.7)+ (harmAssets$Canoe*0.85)+ (harmAssets$`Canoe Moma`*0.7)+ (harmAssets$Raft*0.6)+ (harmAssets$Motorcycle*0.9)+
+  (harmAssets$Tractor*1.0)
+
+harmAssets$TotalAssetValue<-(harmAssets$Television *2500)+(harmAssets$Radio*500)+(harmAssets$Cellphone*500)+(harmAssets$`Sewing Machine`*7000)+
+  (harmAssets$Axe*200)+ (harmAssets$Machete*200)+ (harmAssets$`Fishing rod`*100)+ (harmAssets$`Fishing net`*1000)+ (harmAssets$Harpoon*500)+
+  (harmAssets$Raft*1000)+ (harmAssets$Canoe*5000)+ (harmAssets$`Canoe Moma`*15000)+ (harmAssets$Tractor*30000)+ (harmAssets$Wagon*5000)+
+  (harmAssets$Bed*4000)+ (harmAssets$Mattress*1500)+ (harmAssets$Table*1500)+ (harmAssets$Chair*400)+ (harmAssets$`Cups & plates`*500)+
+  (harmAssets$Stove*5000)+ (harmAssets$Watch*100)+ (harmAssets$Gas*100)+ (harmAssets$`Mortar & pestle`*200)
+
+harmAssets$ProductiveAssetValue<-(harmAssets$Television *2500)+(harmAssets$Radio*500)+(harmAssets$Cellphone*500)+(harmAssets$`Sewing Machine`*7000)+
+  (harmAssets$Axe*200)+ (harmAssets$Machete*200)+ (harmAssets$`Fishing rod`*100)+ (harmAssets$`Fishing net`*1000)+ (harmAssets$Harpoon*500)+
+  (harmAssets$Raft*1000)+ (harmAssets$Canoe*5000)+ (harmAssets$`Canoe Moma`*15000)+ (harmAssets$Tractor*30000)+ (harmAssets$Wagon*5000)
+
+harmAssets$NonProductiveAssetValue<- (harmAssets$Bed*4000)+ (harmAssets$Mattress*1500)+ (harmAssets$Table*1500)+ (harmAssets$Chair*400)+ 
+  (harmAssets$`Cups & plates`*500)+
+  (harmAssets$Stove*5000)+ (harmAssets$Watch*100)+ (harmAssets$Gas*100)+ (harmAssets$`Mortar & pestle`*200)
+ 
+  
 write.csv(harmAssets,file="Harmonized_Assets_Data.csv")
 

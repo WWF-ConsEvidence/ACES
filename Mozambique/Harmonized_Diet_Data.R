@@ -129,5 +129,11 @@ names(diet2018)[27]= "Inects"
 
 
 harmDiet<-rbind(diet2008,diet2014,diet2018)
+# add weighted diet column
+harmDiet$Weighted_Dietary_Diversity<-(harmDiet$`Red Meat`*4)+(harmDiet$`White Meat`*4)+(harmDiet$Pork*4)+(harmDiet$Organs*4)+
+  (harmDiet$CSB*3)+(harmDiet$`Beans/Lentils`*3)+(harmDiet$Seeds*3)+(harmDiet$Eggs*3)+(harmDiet$Fish*3)+(harmDiet$Grains*2)+
+  (harmDiet$`Manufactured Cereals`*2)+(harmDiet$`Sweet Potato`*1.5)+(harmDiet$Potato*1.5)+(harmDiet$Vegetables)+(harmDiet$`Dark Leafy Greens`)+
+  (harmDiet$`Mango/Papaya`)+(harmDiet$`Oils/Fats`)+(harmDiet$Sugar)+(harmDiet$`Wild Fruits`)
+
 write.csv(harmDiet,file="Harmonized_Diet_Data.csv")
 

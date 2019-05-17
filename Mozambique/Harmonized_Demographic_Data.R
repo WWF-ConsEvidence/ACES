@@ -276,7 +276,7 @@ harmdem$Cons_Intervention_gen<-ifelse(harmdem$Community == "Nauluco" ,0,
                            ifelse(harmdem$Community == "Corane",1,
                            ifelse(harmdem$Community == "Mingolene",1,NA))))))))
 
-harmdem$Devel_Intervention_gen<-ifelse(harmdem$Community == "Nauluco" ,1,
+harmdem$Devel_Intervention_gen<-ifelse(harmdem$Community == "Nauluco" ,0,
                                   ifelse(harmdem$Community == "Namame", 1,
                                   ifelse(harmdem$Community == "Pulizica",0,
                                   ifelse(harmdem$Community == "Namiepe",1,

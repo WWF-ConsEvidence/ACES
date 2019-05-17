@@ -1,0 +1,5 @@
+library(readr)
+library(dplyr)
+library(tibble)
+library(ggplot2)
+dat2018 <- read_csv("~/CARE-WWF/2018Data.csv")
